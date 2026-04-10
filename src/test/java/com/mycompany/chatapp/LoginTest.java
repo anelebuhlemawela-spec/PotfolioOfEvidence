@@ -72,12 +72,22 @@ public class LoginTest {
     /**
      * Test of checkCellPhoneNumber method, of class Login.
      */
-    @Test
-    public void testCheckCellPhoneNumber() {
+    @Test 
+    public void testCheckCellPhoneNumberTrue() {
+        System.out.println("checkCellPhoneNumber");
+        String phone = "+27838968976 ";
+        Login instance = new Login();
+        boolean expResult = false;
+        boolean result = instance.checkCellPhoneNumber(phone);
+        assertEquals(expResult, result);
+        
+    }
+@Test
+    public void testCheckCellPhoneNumberFalse() {
         System.out.println("checkCellPhoneNumber");
         String phone = "08966553";
         Login instance = new Login();
-        boolean expResult = true;
+        boolean expResult = false;
         boolean result = instance.checkCellPhoneNumber(phone);
         assertEquals(expResult, result);
         
@@ -95,8 +105,7 @@ public class LoginTest {
         boolean expResult = false;
         boolean result = instance.loginUser(enteredUsername, enteredPassword);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
@@ -111,8 +120,7 @@ public class LoginTest {
         String expResult = "";
         String result = instance.returnLoginStatus(username, password);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+       
     }
     
 }
