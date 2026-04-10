@@ -48,31 +48,39 @@ public class LoginTest {
     /**
      * Test of checkPasswordComplexity method, of class Login.
      */
-    @org.junit.jupiter.api.Test
-    public void testCheckPasswordComplexity() {
+    @Test
+    public void testCheckPasswordComplexityFalse() {
         System.out.println("checkPasswordComplexity");
-        String password = "";
+        String password = "Ch&&sec@ke99!";
         Login instance = new Login();
         boolean expResult = false;
         boolean result = instance.checkPasswordComplexity(password);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
-
+    @Test
+    public void testCheckPasswordComplexityTrue() {
+        System.out.println("checkPasswordComplexity");
+        String password = "password";
+        Login instance = new Login();
+        boolean expResult = false;
+        boolean result = instance.checkPasswordComplexity(password);
+        assertEquals(expResult, result);
+        
+    }
+  
     /**
      * Test of checkCellPhoneNumber method, of class Login.
      */
-    @org.junit.jupiter.api.Test
+    @Test
     public void testCheckCellPhoneNumber() {
         System.out.println("checkCellPhoneNumber");
-        String phone = "";
+        String phone = "08966553";
         Login instance = new Login();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.checkCellPhoneNumber(phone);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        
     }
 
     /**
