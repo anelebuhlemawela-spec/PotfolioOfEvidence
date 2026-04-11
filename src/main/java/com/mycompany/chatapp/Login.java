@@ -38,11 +38,11 @@ public class Login {
     public boolean checkUserName(String username){
         return username.contains("_")&& username.length() <=5;
        }
-    public boolean checkPasswordComplexity(String password){
-        return password.matches(".[0-9].")&&
-                password.matches(".*[!@#$%^&(),.?\":{}|<>].*")&&
-                password.length() >8 &&
-                password.matches(".[A-Z].");
+   public boolean checkPasswordComplexity(String password){
+      return password.length() >= 8 &&
+               password.matches(".[A-Z].") &&
+               password.matches(".[0-9].") &&
+               password.matches(".[!@#$%^&(),.?\":{}|<>].*");
                 
     }
    public boolean checkCellPhoneNumber(String phone) {
@@ -61,4 +61,5 @@ public String returnLoginStatus(String username, String password) {
     }
 }
     }
+
 

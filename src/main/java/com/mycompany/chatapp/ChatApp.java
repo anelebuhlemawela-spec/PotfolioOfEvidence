@@ -72,3 +72,71 @@ public class ChatApp {
     }
    }
 }
+
+
+class QuickChat {
+    static int totalMessagesSent = 0;
+    static int messageLimit = 0;
+    static int messagesEntered = 0;
+    static String[] messages; // store messages
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Welcome to QuickChat.");
+
+        // Get message limit
+        while (true) {
+            try {
+                System.out.print("How many messages would you like to enter? ");
+                messageLimit = Integer.parseInt(sc.nextLine());
+                messages = new String[messageLimit]; // create array
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Please enter a valid number.");
+            }
+        }
+
+        OUTER:
+        while (true) {
+            System.out.println("\nChoose an option:");
+            System.out.println("1) Send Message");
+            System.out.println("2) Show recently sent messages");
+            System.out.println("3) Quit");
+            System.out.print("Enter your choice (1-3): ");
+            String choice = sc.nextLine();
+            switch (choice) {
+                case "1" -> {
+                    if (messagesEntered >= messageLimit) {
+                        System.out.println("You have already entered the maximum number of messages.");
+                    } else {
+                        System.out.print("Enter your message: ");
+                        String msg = sc.nextLine();
+                        
+                        messages[messagesEntered] = msg; // store message
+                        messagesEntered++;
+                        totalMessagesSent++;
+                        
+                        System.out.println("Message sent!");
+                    }
+                }
+                case "2" -> {
+                    if (messagesEntered == 0) {
+                        System.out.println("No messages sent yet.");
+                    } else {
+                        System.out.println("Messages:");
+                        for (int i = 0; i < messagesEntered; i++) {
+                            System.out.println((i + 1) + ". " + messages[i]);
+                        }
+                    }
+                }
+                case "3" -> {
+                    break OUTER;
+                }
+                default -> System.out.println("Invalid choice. Please enter 1-3.");
+            }
+        }
+
+        System.out.println("Total messages sent: " + totalMessagesSent);
+    }
+}

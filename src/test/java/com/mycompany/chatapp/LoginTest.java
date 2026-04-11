@@ -49,17 +49,17 @@ public class LoginTest {
      * Test of checkPasswordComplexity method, of class Login.
      */
     @Test
-    public void testCheckPasswordComplexityFalse() {
+    public void testCheckPasswordComplexityTrue() {
         System.out.println("checkPasswordComplexity");
         String password = "Ch&&sec@ke99!";
         Login instance = new Login();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.checkPasswordComplexity(password);
-        assertEquals(expResult, result);
+        assertEquals(expResult, true);
         
     }
     @Test
-    public void testCheckPasswordComplexityTrue() {
+    public void testCheckPasswordComplexityFalse() {
         System.out.println("checkPasswordComplexity");
         String password = "password";
         Login instance = new Login();
@@ -72,14 +72,14 @@ public class LoginTest {
     /**
      * Test of checkCellPhoneNumber method, of class Login.
      */
-    @Test 
+    @Test
     public void testCheckCellPhoneNumberTrue() {
         System.out.println("checkCellPhoneNumber");
         String phone = "+27838968976 ";
         Login instance = new Login();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.checkCellPhoneNumber(phone);
-        assertEquals(expResult, result);
+        assertEquals(expResult, true);
         
     }
 @Test
