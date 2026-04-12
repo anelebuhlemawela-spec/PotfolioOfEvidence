@@ -4,10 +4,6 @@
  */
 package com.mycompany.chatapp;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,7 +51,7 @@ public class LoginTest {
         Login instance = new Login();
         boolean expResult = true;
         boolean result = instance.checkPasswordComplexity(password);
-        assertEquals(expResult, true);
+        assertEquals(expResult, result);
         
     }
     @Test
@@ -79,7 +75,7 @@ public class LoginTest {
         Login instance = new Login();
         boolean expResult = true;
         boolean result = instance.checkCellPhoneNumber(phone);
-        assertEquals(expResult, true);
+        assertEquals(expResult, result);
         
     }
 @Test
@@ -97,30 +93,48 @@ public class LoginTest {
      * Test of loginUser method, of class Login.
      */
     @Test
-    public void testLoginUser() {
+    public void testLoginUserTrue() {
         System.out.println("loginUser");
         String enteredUsername = "kyl_1";
         String enteredPassword = "Ch&&sec@ke99!";
         Login instance = new Login();
         boolean expResult = true;
         boolean result = instance.loginUser(enteredUsername, enteredPassword);
-        assertEquals(expResult, true);
+        assertEquals(expResult, result);
         
     }
-
+    @Test
+    public void testLoginUserFalse() {
+        System.out.println("loginUser");
+        String enteredUsername = "kyle!!!!!!!!!";
+        String enteredPassword = "password";
+        Login instance = new Login();
+        boolean expResult = false;
+        boolean result = instance.loginUser(enteredUsername, enteredPassword);
+        assertEquals(expResult, result);
+    }
     /**
      * Test of returnLoginStatus method, of class Login.
      */
-    @org.junit.jupiter.api.Test
-    public void testReturnLoginStatus() {
+    @Test
+    public void testReturnLoginStatusFalse() {
         System.out.println("returnLoginStatus");
-        String username = "";
-        String password = "";
+        String username = "kyle!!!!!!!!!";
+        String password = "password";
         Login instance = new Login();
-        String expResult = "";
+        String expResult = "wrong,123";
         String result = instance.returnLoginStatus(username, password);
         assertEquals(expResult, result);
        
     }
-    
+    @Test
+    public void testReturnLoginStatusTrue() {
+        System.out.println("returnLoginStatus");
+        String username = "kyl_1";
+        String password = "Ch&&sec@ke99!";
+        Login instance = new Login();
+        String expResult = "Welcome, you have successfully logged in.\"; ";
+        String result = instance.returnLoginStatus(username, password);
+        assertEquals(expResult, result);
+    }
 }
