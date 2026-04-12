@@ -96,15 +96,15 @@ public class LoginTest {
     /**
      * Test of loginUser method, of class Login.
      */
-    @org.junit.jupiter.api.Test
+    @Test
     public void testLoginUser() {
         System.out.println("loginUser");
-        String enteredUsername = "";
-        String enteredPassword = "";
+        String enteredUsername = "kyl_1";
+        String enteredPassword = "Ch&&sec@ke99!";
         Login instance = new Login();
-        boolean expResult = false;
+        boolean expResult = true;
         boolean result = instance.loginUser(enteredUsername, enteredPassword);
-        assertEquals(expResult, result);
+        assertEquals(expResult, true);
         
     }
 
