@@ -16,6 +16,10 @@ public class Login {
           private String phoneNumber;
      
           // Setter
+          public void setfirstname(String firstname){  
+           this.firstname=firstname;
+       }
+          
        public void setUsername(String username){  
            this.username=username;
        }
