@@ -9,7 +9,8 @@ package com.mycompany.chatapp;
  * @author anele
  */
 public class Login {
-    
+        private String firstname;
+        
         private String username;
          private String password;
           private String phoneNumber;
@@ -38,6 +39,7 @@ public class Login {
     public boolean checkUserName(String username){
         return username.contains("_")&& username.length() <=5;
        }
+    // https://gemini.google.com/app
    public boolean checkPasswordComplexity(String password){
       return password.length() >= 8 &&
                password.matches(".[A-Z].") &&
@@ -48,6 +50,10 @@ public class Login {
    public boolean checkCellPhoneNumber(String phone) {
     return phone.matches("^\\+27[0-9]{9}$");
 }
+  
+   
+   // https://chatgpt.com/c/69c50866-03ac-832e-bfc0-763964dab793
+   
    public boolean loginUser(String enteredUsername, String enteredPassword) {
     return enteredUsername != null && enteredPassword != null &&
            enteredUsername.equals(this.username) &&
