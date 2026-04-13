@@ -20,6 +20,9 @@ public class Login {
            this.firstname=firstname;
        }
           
+       public void setlastname(String lastname){  
+           this.lastname=lastname;
+       }   
        public void setUsername(String username){  
            this.username=username;
        }
@@ -65,11 +68,12 @@ public class Login {
 }
 public String returnLoginStatus(String username, String password) {
     if (loginUser(username, password)) {
-        return "Login successful,Welcome";
+        return "Welcome " + firstname + ", " + lastname + " it is great to see you again.";
     } else {
         return "Username or password incorrect, please try again.";
     }
 }
-    }
+}
+    
 
 
