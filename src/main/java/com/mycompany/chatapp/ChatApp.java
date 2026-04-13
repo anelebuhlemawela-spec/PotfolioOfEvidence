@@ -48,7 +48,7 @@ public class ChatApp {
        System.out.println("Cell phone number successfully added.");
    }else{
       System.out.println("Invalid phone Number formate.");
-     // return;
+      return;
    }
    //Login
    System.out.print("Enter username to login:");
