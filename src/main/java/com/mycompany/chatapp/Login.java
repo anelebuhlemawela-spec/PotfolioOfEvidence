@@ -14,15 +14,20 @@ public class Login {
         private String username;
          private String password;
           private String phoneNumber;
+           
      
-          // Setter
+          // firstname,lastname
           public void setfirstname(String firstname){  
            this.firstname=firstname;
        }
           
        public void setlastname(String lastname){  
            this.lastname=lastname;
-       }   
+           
+           //setter
+       }  
+       
+      
        public void setUsername(String username){  
            this.username=username;
        }
@@ -62,7 +67,7 @@ public class Login {
    // https://chatgpt.com/c/69c50866-03ac-832e-bfc0-763964dab793
    
    public boolean loginUser(String enteredUsername, String enteredPassword) {
-    return enteredUsername != null && enteredPassword != null &&
+    return 
            enteredUsername.equals(this.username) &&
            enteredPassword.equals(this.password);
 }
@@ -73,6 +78,8 @@ public String returnLoginStatus(String username, String password) {
         return "Username or password incorrect, please try again.";
     }
 }
+
+   
 }
     
 
