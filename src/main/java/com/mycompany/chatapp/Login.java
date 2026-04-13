@@ -10,7 +10,7 @@ package com.mycompany.chatapp;
  */
 public class Login {
         private String firstname;
-        
+        private String lastname;
         private String username;
          private String password;
           private String phoneNumber;
