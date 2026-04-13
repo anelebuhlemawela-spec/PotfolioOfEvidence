@@ -22,10 +22,10 @@ public class ChatApp {
         System.out.print("Enter username:");
        String UserName=input.nextLine();
         if(Login.checkUserName(UserName)){
-            System.out.println("Username successfuiil captured.");
+            System.out.println("Username successful captured.");
         }else{
            System.out.println("Username must contain'_'and be no more than 5 characters.");
-           return;
+          // return; 
         }
         //password
         System.out.print("Enter your password:");
@@ -36,7 +36,7 @@ public class ChatApp {
         System.out.println("Password successfully captured");
     }else{
     System.out.println("Password must be 8+ characters, include a capital letter, number, and special character.");
-        return;
+       // return;
     }
      
    //PhoneNumber
@@ -73,7 +73,7 @@ public class ChatApp {
    }
 }
 
-
+//https://gemini.google.com/app
 class QuickChat {
     static int totalMessagesSent = 0;
     static int messageLimit = 0;
