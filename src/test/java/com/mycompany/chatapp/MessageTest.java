@@ -150,3 +150,4 @@ public void testStoreMessage() {
 
     assertEquals(expected, result);
 }
+}
