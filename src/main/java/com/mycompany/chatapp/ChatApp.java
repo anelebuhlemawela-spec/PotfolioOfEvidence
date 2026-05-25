@@ -24,7 +24,7 @@ public class ChatApp {
 
         // REGISTRATION
         System.out.print(
-                "Enter a username (max 5 chars, must include _): "
+                "Enter a username (max 5 characters, must include _): "
         );
 
         String username =
