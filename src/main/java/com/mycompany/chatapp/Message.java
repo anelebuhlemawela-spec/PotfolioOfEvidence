@@ -129,6 +129,10 @@ public class Message {
         return messageId;
     }
 
+    public String getMessageHash() {
+        return messageHash;
+    }  
+    
     public String getRecipient() {
         return recipient;
     }
@@ -137,9 +141,9 @@ public class Message {
         return messageText;
     }
 
-    public String getMessageHash() {
-        return messageHash;
-    }  
+     public static int getMessageCounter() {
+        return messageCounter;
+    }
 
     private String generateMessageHash() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
