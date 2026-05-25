@@ -4,148 +4,219 @@
  */
 package com.mycompany.chatapp;
 
-import java.util.Random;
-
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 /**
  *
  * @author anele
  */
+class Message {
+
+    String messageID;
+    String recipient;
+    String message;
+    String hash;
+    String status;
 public class Message {
-  private final String messageId;
-    private static int messageCounter = 0;
 
-    private final String recipient;
-    private final String messageText;
-    private final String messageHash;
+    
+    public Message(
+            String messageID,
+            String recipient,
+            String message,
+            int messageNum
+    ) {
 
-    public Message(String recipient, String messageText) {
-
-        this.messageId = generateMessageId();
-
-        messageCounter++;
-
+        this.messageID = messageID;
         this.recipient = recipient;
-        this.messageText = messageText;
+        this.message = message;
 
-        this.messageHash = generateMessageHash();
+        this.hash =
+                createMessageHash(
+                        messageID,
+                        messageNum,
+                        message
+                );
     }
 
-    // GENERATE MESSAGE ID
-    private String generateMessageId() {
-
-        Random rand = new Random();
-
-        long id =10 + (long)(rand.nextDouble() * 10);
-               
-
-        return String.valueOf(id);
-    }
-
-    // CHECK MESSAGE ID
-    public boolean checkMessageID() {
-
-        return messageId.length() <= 10;
-    }
-
-    // CHECK RECIPIENT NUMBER
+    // CHECK RECIPIENT
     public boolean checkRecipientCell() {
 
-        return recipient.matches("^\\+27\\d{9}$");
+        return recipient.matches("\\+27\\d{9}");
     }
 
-    // VALIDATE MESSAGE LENGTH
-    public String validateMessage() {
+    // CREATE HASH
+    public String createMessageHash(
+            String id,
+            int num,
+            String msg
+    ) {
 
-        if (messageText.length() <= 250) {
+        String[] words =
+                msg.trim().split(" ");
 
-            return "Message ready to send.";
+        String first =
+                words[0].toUpperCase();
 
-        } else {
+        String last =
+                words[words.length - 1]
+                        .toUpperCase();
 
-            int excess =
-                    messageText.length() - 250;
-
-            return
-                    "Message exceeds 250 characters by "
-                    + excess;
-        }
-    }
-
-    // CREATE MESSAGE HASH
-    public String createMessageHash() {
-
-        String[] words = messageText.split(" ");
-
-        String firstWord = words[0];
-        String lastWord = words[words.length - 1];
-
-        return (
-                messageId.substring(0, 2)
+        return id.substring(0, 2)
                 + ":"
-                + messageCounter
+                + num
                 + ":"
-                + firstWord
-                + lastWord
-        ).toUpperCase();
+                + first
+                + last;
     }
 
-    // SEND MESSAGE
-    public String sentMessage(int option) {
+    // SEND OPTION
+    public String sendMessageOption() {
 
-        switch (option) {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("\nChoose Action");
+        System.out.println("1. Send");
+        System.out.println("2. Discard");
+        System.out.println("3. Store");
+
+        System.out.print("Enter choice: ");
+
+        int choice =
+                Integer.parseInt(
+                        input.nextLine()
+                );
+
+        switch (choice) {
 
             case 1:
-                return "Message successfully sent.";
+                status = "Sent";
+                break;
 
             case 2:
-                return "Message disregarded.";
+                status = "Discarded";
+                break;
 
             case 3:
-                return "Message successfully stored.";
+                status = "Stored";
+                break;
 
             default:
-                return "Invalid option.";
+                status = "Invalid";
         }
+
+        return status;
     }
 
-    // PRINT MESSAGE
-    public String printMessages() {
+    // DISPLAY
+    public String display() {
 
-        return
-                "\nMessage ID: " + messageId +
-                "\nMessage Hash: " + messageHash +
-                "\nRecipient: " + recipient +
-                "\nMessage: " + messageText;
+        return "MessageID: "
+                + messageID
+                + "\nHash: "
+                + hash
+                + "\nTo: "
+                + recipient
+                + "\nMessage: "
+                + message
+                + "\nStatus: "
+                + status;
     }
 
-    // TOTAL MESSAGES
-    public static int returnTotalMessages() {
+    // JSON FORMAT
+    public String toJson() {
 
-        return messageCounter;
+        return "{"
+                + "\"messageID\":\""
+                + messageID
+                + "\","
+                + "\"recipient\":\""
+                + recipient
+                + "\","
+                + "\"message\":\""
+                + message.replace("\"", "'")
+                + "\","
+                + "\"hash\":\""
+                + hash
+                + "\","
+                + "\"status\":\""
+                + status
+                + "\"}";
     }
 
-    // GETTERS
-    public String getMessageId() {
-        return messageId;
+    // FROM JSON
+    public static Message fromJson(String json) {
+
+        String[] parts =
+                json.replace("{", "")
+                        .replace("}", "")
+                        .split(",\\s*");
+
+        Map<String, String> map =
+                new HashMap<>();
+
+        for (String part : parts) {
+
+            String[] kv =
+                    part.split(":");
+
+            String key =
+                    kv[0]
+                            .replace("\"", "")
+                            .trim();
+
+            String val =
+                    kv[1]
+                            .replace("\"", "")
+                            .trim();
+
+            map.put(key, val);
+        }
+
+        Message m =
+                new Message(
+                        map.get("messageID"),
+                        map.get("recipient"),
+                        map.get("message"),
+                        0
+                );
+
+        m.hash = map.get("hash");
+        m.status = map.get("status");
+
+        return m;
     }
 
-    public String getMessageHash() {
-        return messageHash;
-    }  
-    
-    public String getRecipient() {
-        return recipient;
+    String validateMessage() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public String getMessageText() {
-        return messageText;
+    String validateMessage() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-     public static int getMessageCounter() {
-        return messageCounter;
+    String validateMessage() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public String toTextFileFormat() {
-        return messageId + "," + messageHash + "," + recipient + "," + messageText;
+    String validateMessage() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    String LengthSuccess() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    String LengthSuccess() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    Object validateMessage() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    Object validateMessage() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
