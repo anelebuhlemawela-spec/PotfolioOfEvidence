@@ -18,10 +18,10 @@ class Message {
     String message;
     String hash;
     String status;
-public class Message {
+
 
     
-    public Message(
+     public Message(
             String messageID,
             String recipient,
             String message,
@@ -40,7 +40,22 @@ public class Message {
                 );
     }
 
-    // CHECK RECIPIENT
+    // VALIDATE MESSAGE
+    public String validateMessage() {
+
+        if (message.length() <= 250) {
+
+            return "Message ready to send.";
+
+        } else {
+
+            return "Message exceeds 250 characters by "
+                    + (message.length() - 250)
+                    + ", please reduce size.";
+        }
+    }
+
+    // CHECK RECIPIENT NUMBER
     public boolean checkRecipientCell() {
 
         return recipient.matches("\\+27\\d{9}");
@@ -71,7 +86,7 @@ public class Message {
                 + last;
     }
 
-    // SEND OPTION
+    // SEND MESSAGE OPTION
     public String sendMessageOption() {
 
         Scanner input = new Scanner(System.in);
@@ -91,32 +106,32 @@ public class Message {
         switch (choice) {
 
             case 1:
-                status = "Sent";
+                status = "Message successfully sent.";
                 break;
 
             case 2:
-                status = "Discarded";
+                status = "Message disregarded.";
                 break;
 
             case 3:
-                status = "Stored";
+                status = "Message successfully stored.";
                 break;
 
             default:
-                status = "Invalid";
+                status = "Invalid option.";
         }
 
         return status;
     }
 
-    // DISPLAY
+    // DISPLAY MESSAGE
     public String display() {
 
-        return "MessageID: "
+        return "\nMessage ID: "
                 + messageID
-                + "\nHash: "
+                + "\nMessage Hash: "
                 + hash
-                + "\nTo: "
+                + "\nRecipient: "
                 + recipient
                 + "\nMessage: "
                 + message
@@ -135,7 +150,7 @@ public class Message {
                 + recipient
                 + "\","
                 + "\"message\":\""
-                + message.replace("\"", "'")
+                + message
                 + "\","
                 + "\"hash\":\""
                 + hash
@@ -186,37 +201,5 @@ public class Message {
         m.status = map.get("status");
 
         return m;
-    }
-
-    String validateMessage() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    String validateMessage() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    String validateMessage() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    String validateMessage() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    String LengthSuccess() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    String LengthSuccess() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    Object validateMessage() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
-    Object validateMessage() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
