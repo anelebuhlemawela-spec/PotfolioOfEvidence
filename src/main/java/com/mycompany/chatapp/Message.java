@@ -145,7 +145,7 @@ public class Message {
         return messageCounter;
     }
 
-    private String generateMessageHash() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public String toTextFileFormat() {
+        return messageId + "," + messageHash + "," + recipient + "," + messageText;
     }
 }
