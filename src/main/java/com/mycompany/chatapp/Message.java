@@ -35,9 +35,8 @@ public class Message {
 
         Random rand = new Random();
 
-        long id =
-                1000000000L +
-                (long)(rand.nextDouble() * 9000000000L);
+        long id =10 + (long)(rand.nextDouble() * 10);
+               
 
         return String.valueOf(id);
     }
