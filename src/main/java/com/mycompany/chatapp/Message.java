@@ -39,6 +39,25 @@ class Message {
                         message
                 );
     }
+     public String getMessageID() {
+    return messageID;
+}
+
+public String getRecipient() {
+    return recipient;
+}
+
+public String getMessage() {
+    return message;
+}
+
+public String getHash() {
+    return hash;
+}
+
+public String getStatus() {
+    return status;
+}
 
     // VALIDATE MESSAGE
     public String validateMessage() {
@@ -202,5 +221,29 @@ class Message {
         m.status = map.get("status");
 
         return m;
+    }
+
+    String getStatus() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    Object getMessage() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    Object getMessageID() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    String getRecipient() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    Object getHash() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    boolean messageReport() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
