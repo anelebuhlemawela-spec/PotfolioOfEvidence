@@ -95,6 +95,7 @@ class Message {
         System.out.println("1. Send");
         System.out.println("2. Discard");
         System.out.println("3. Store");
+        System.out.println("4. Report");
 
         System.out.print("Enter choice: ");
 
