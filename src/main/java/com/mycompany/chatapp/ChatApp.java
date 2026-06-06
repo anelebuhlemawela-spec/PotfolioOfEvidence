@@ -13,16 +13,25 @@ import java.util.Scanner;
 public class ChatApp {
 
     static Scanner scanner = new Scanner(System.in);
+     static Login login = new Login();
 
-    static Login login = new Login();
-
-    static int totalMessagesSent = 0;
+     static int totalMessagesSent = 0;
 
     public static void main(String[] args) {
 
-        System.out.println("Welcome to QuickChat.");
+        System.out.println("      Welcome to QuickChat      ");
 
         // REGISTRATION
+        
+        System.out.print("Enter First Name: ");
+        String FirstName= scanner.nextLine();
+        
+        System.out.print("Enter LastName: ");
+        String LastName= scanner.nextLine();
+         
+        login.setFirstName(FirstName); 
+        login.setLastName(LastName);
+        
         System.out.print(
                 "Enter a username (max 5 characters, must include _): "
         );
@@ -168,7 +177,7 @@ public class ChatApp {
                     );
 
                     System.out.println(
-                            "Goodbye."
+                            "Goodbye, Thank you for using QuickChat."
                     );
 
                     System.exit(0);
