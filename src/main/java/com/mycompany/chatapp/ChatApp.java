@@ -164,7 +164,7 @@ public class ChatApp {
 
             switch (option) {
 
-                case "1":
+                case "1":,lkj
 
                     manager.displaySentMessages();
 
