@@ -159,7 +159,7 @@ public class ChatApp {
 
             System.out.print("Choose option: ");
 
-            String option =
+            String option = 
                     scanner.nextLine();
 
             switch (option) {
