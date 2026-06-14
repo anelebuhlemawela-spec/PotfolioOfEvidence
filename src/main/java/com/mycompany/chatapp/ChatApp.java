@@ -204,7 +204,7 @@ public class ChatApp {
 
                 case "7":
 
-                    manager.deleteMessageByHash();
+                    manager.deleteMessageByHash("10:2:WHEREASKED");
 
                     break;
 
