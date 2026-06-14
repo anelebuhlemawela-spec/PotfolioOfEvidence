@@ -4,135 +4,176 @@
  */
 package com.mycompany.chatapp;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
-/**
- *
- * @author anele
- */
+import java.util.Scanner;
+
 public class MessageManager {
-   
-      
-}
 
+    private final ArrayList<Message> sent = new ArrayList<>();
+    private final ArrayList<Message> discarded = new ArrayList<>();
+    private final ArrayList<Message> stored = new ArrayList<>();
 
+    private int total = 0;
 
-    private ArrayList<Message> sentMessages;
-    private ArrayList<Message> storedMessages;
-    private ArrayList<Message> disregardedMessages;
+    private final Scanner scanner = new Scanner(System.in);
 
-    private int totalMessagesSent;
+    // SEND MESSAGES
+    public void sendMessages(int count) {
 
-    public MessageManager() {
+        for (int i = 0; i < count; i++) {
 
-        sentMessages = new ArrayList<>();
-        storedMessages = new ArrayList<>();
-        disregardedMessages = new ArrayList<>();
+            System.out.println("\n==============================");
+            System.out.println("Message " + (i + 1));
+            System.out.println("==============================");
 
-        totalMessagesSent = 0;
+            String id =
+                    String.valueOf(
+                            (long) (Math.random()
+                            * 10000000000L));
 
-        loadStoredMessages();
-    }
+            System.out.print(
+                    "Enter recipient number: ");
 
-    // ==========================
-    // ADD MESSAGE
-    // ==========================
+            String recipient =
+                    scanner.nextLine();
 
-    public void addMessage(Message message) {
+            System.out.print(
+                    "Enter message (max 250 characters): ");
 
-        String status = message.getStatus();
+            String msg =
+                    scanner.nextLine();
 
-        if (status.equals("Sent")) {
+            if (msg.length() > 250) {
 
-            sentMessages.add(message);
-            totalMessagesSent++;
+                System.out.println(
+                        "Message exceeds 250 characters by "
+                        + (msg.length() - 250));
 
-        } else if (status.equals("Stored")) {
+                i--;
+                continue;
+            }
 
-            storedMessages.add(message);
-            saveStoredMessage(message);
+            Message message =
+                    new Message(
+                            id,
+                            recipient,
+                            msg,
+                            total + 1);
 
-        } else {
+            if (!message.checkRecipientCell()) {
 
-            disregardedMessages.add(message);
+                System.out.println(
+                        "Cell phone number incorrectly formatted.");
+
+                i--;
+                continue;
+            }
+
+            String status =
+                    message.sendMessageOption();
+
+            switch (status) {
+
+                case "Sent":
+
+                    sent.add(message);
+                    total++;
+
+                    System.out.println(
+                            "\nMessage successfully sent.");
+
+                    break;
+
+                case "Discarded":
+
+                    discarded.add(message);
+
+                    System.out.println(
+                            "\nMessage discarded.");
+
+                    break;
+
+                case "Stored":
+
+                    stored.add(message);
+
+                    System.out.println(
+                            "\nMessage stored.");
+
+                    break;
+            }
+
+            System.out.println(
+                    "\n" + message.display());
         }
     }
 
-    public int getTotalMessagesSent() {
+    // TOTAL SENT
+    public int returnTotalMessages() {
 
-        return totalMessagesSent;
+        return total;
     }
 
-   
-    private void saveStoredMessage(
-            Message message) {
+    // SAVE STORED MESSAGES
+    public void saveStoredMessages() {
 
-        try {
+        try (PrintWriter writer =
+                new PrintWriter(
+                        new FileWriter(
+                                "storedMessages.json"))) {
 
-            FileWriter writer =
-                    new FileWriter(
-                            "storedMessages.json",
-                            true);
+            for (Message m : stored) {
 
-            writer.write(
-                    message.toJson());
+                writer.println(
+                        m.toJson());
+            }
 
-            writer.write(
-                    System.lineSeparator());
-
-            writer.close();
+            System.out.println(
+                    "Stored messages saved.");
 
         } catch (IOException e) {
 
             System.out.println(
-                    "Error saving message.");
+                    "Failed to save messages.");
         }
     }
 
-   
-
+    // LOAD STORED MESSAGES
     public void loadStoredMessages() {
 
-        File file =
-                new File(
-                        "storedMessages.json");
-
-        if (!file.exists()) {
-            return;
-        }
-
-        try {
-
-            BufferedReader reader =
-                    new BufferedReader(
-                            new FileReader(file));
+        try (BufferedReader reader =
+                new BufferedReader(
+                        new FileReader(
+                                "storedMessages.json"))) {
 
             String line;
 
             while ((line =
                     reader.readLine()) != null) {
 
-                storedMessages.add(
+                stored.add(
                         Message.fromJson(line));
             }
 
-            reader.close();
-
         } catch (IOException e) {
 
-            System.out.println(
-                    "Error loading messages.");
+            // File may not exist on first run
         }
     }
 
-    // ==========================
     // DISPLAY SENT
-    // ==========================
-
     public void displaySentMessages() {
 
-        if (sentMessages.isEmpty()) {
+        System.out.println(
+                "\n===== SENT MESSAGES =====");
+
+        if (sent.isEmpty()) {
 
             System.out.println(
                     "No sent messages.");
@@ -140,22 +181,47 @@ public class MessageManager {
             return;
         }
 
-        for (Message msg :
-                sentMessages) {
+        for (Message m : sent) {
 
             System.out.println(
-                    msg.display());
+                    m.display());
 
             System.out.println(
                     "--------------------");
         }
     }
 
-   
+    // DISPLAY DISCARDED
+    public void displayDiscardedMessages() {
 
+        System.out.println(
+                "\n===== DISCARDED MESSAGES =====");
+
+        if (discarded.isEmpty()) {
+
+            System.out.println(
+                    "No discarded messages.");
+
+            return;
+        }
+
+        for (Message m : discarded) {
+
+            System.out.println(
+                    m.display());
+
+            System.out.println(
+                    "--------------------");
+        }
+    }
+
+    // DISPLAY STORED
     public void displayStoredMessages() {
 
-        if (storedMessages.isEmpty()) {
+        System.out.println(
+                "\n===== STORED MESSAGES =====");
+
+        if (stored.isEmpty()) {
 
             System.out.println(
                     "No stored messages.");
@@ -163,111 +229,73 @@ public class MessageManager {
             return;
         }
 
-        for (Message msg :
-                storedMessages) {
+        for (Message m : stored) {
 
             System.out.println(
-                    msg.display());
-
-            System.out.println(
-                    "--------------------");
-        }
-    }
-
-
-    public void displayDisregardedMessages() {
-
-        if (disregardedMessages.isEmpty()) {
-
-            System.out.println(
-                    "No disregarded messages.");
-
-            return;
-        }
-
-        for (Message msg :
-                disregardedMessages) {
-
-            System.out.println(
-                    msg.display());
+                    m.display());
 
             System.out.println(
                     "--------------------");
         }
     }
 
-   
-    public void displayLongestMessage() {
+    // LONGEST MESSAGE
+    public void findLongestMessage() {
 
-        if (storedMessages.isEmpty()) {
+        Message longest = null;
+        int maxLength = 0;
+
+        ArrayList<Message> allMessages =
+                new ArrayList<>();
+
+        allMessages.addAll(sent);
+        allMessages.addAll(discarded);
+        allMessages.addAll(stored);
+
+        for (Message m : allMessages) {
+
+            if (m.getMessage().length()
+                    > maxLength) {
+
+                longest = m;
+                maxLength =
+                        m.getMessage().length();
+            }
+        }
+
+        if (longest != null) {
 
             System.out.println(
-                    "No stored messages.");
+                    "\n===== LONGEST MESSAGE =====");
 
-            return;
+            System.out.println(
+                    longest.display());
+
+        } else {
+
+            System.out.println(
+                    "No messages found.");
         }
-
-        Message longest =
-                storedMessages.get(0);
-
-        for (Message msg :
-                storedMessages) {
-
-            if (msg.getMessage().length()
-                    > longest.getMessage().length()) {
-
-                longest = msg;
-            }
-        }
-
-        System.out.println(
-                "\nLongest Message:");
-
-        System.out.println(
-                longest.getMessage());
     }
 
+    // SEARCH BY RECIPIENT
+    public void searchMessagesByRecipient() {
 
-    public void searchMessageID(
-            String id) {
+        System.out.print(
+                "\nEnter recipient number: ");
 
-        for (Message msg :
-                storedMessages) {
-
-            if (msg.getMessageID()
-                    .equals(id)) {
-
-                System.out.println(
-                        "\nRecipient: "
-                                + msg.getRecipient());
-
-                System.out.println(
-                        "Message: "
-                                + msg.getMessage());
-
-                return;
-            }
-        }
-
-        System.out.println(
-                "Message ID not found.");
-    }
-
- 
-
-    public void searchRecipient(
-            String recipient) {
+        String target =
+                scanner.nextLine();
 
         boolean found = false;
 
-        for (Message msg :
-                storedMessages) {
+        for (Message m : sent) {
 
-            if (msg.getRecipient()
-                    .equals(recipient)) {
+            if (m.getRecipient()
+                    .equals(target)) {
 
                 System.out.println(
-                        msg.getMessage());
+                        "\n" + m.display());
 
                 found = true;
             }
@@ -280,40 +308,55 @@ public class MessageManager {
         }
     }
 
-   
+    // DELETE BY HASH
+    public void deleteMessageByHash(String whereasked) {
 
-    public void deleteMessageByHash(
-            String hash) {
+        System.out.print(
+                "\nEnter hash to delete: ");
+
+        String targetHash =
+                scanner.nextLine();
 
         Iterator<Message> iterator =
-                storedMessages.iterator();
+                sent.iterator();
+
+        boolean found = false;
 
         while (iterator.hasNext()) {
 
-            Message msg =
+            Message m =
                     iterator.next();
 
-            if (msg.getHash()
-                    .equals(hash)) {
+            if (m.getHash()
+                    .equals(targetHash)) {
 
                 iterator.remove();
+
+                total--;
+
+                found = true;
 
                 System.out.println(
                         "Message deleted successfully.");
 
-                return;
+                break;
             }
         }
 
-        System.out.println(
-                "Hash not found.");
+        if (!found) {
+
+            System.out.println(
+                    "Message hash not found.");
+        }
     }
 
-    
+    // MESSAGE REPORT
+    public void displayMessageReport() {
 
-    public void displayReport() {
+        System.out.println(
+                "\n===== MESSAGE REPORT =====");
 
-        if (sentMessages.isEmpty()) {
+        if (sent.isEmpty()) {
 
             System.out.println(
                     "No sent messages.");
@@ -321,36 +364,17 @@ public class MessageManager {
             return;
         }
 
-        System.out.println(
-                "\n===== MESSAGE REPORT =====");
-
-        for (Message msg :
-                sentMessages) {
+        for (Message m : sent) {
 
             System.out.println(
-                    msg.messageReport());
+                    m.messageReport());
 
             System.out.println(
                     "--------------------");
         }
     }
 
-    
-
-    public ArrayList<Message>
-    getSentMessages() {
-
-        return sentMessages;
+    Object findLongestStoredMessage() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-    public ArrayList<Message>
-    getStoredMessages() {
-
-        return storedMessages;
-    }
-
-    public ArrayList<Message>
-    getDisregardedMessages() {
-
-        return disregardedMessages;
-    }
+}
